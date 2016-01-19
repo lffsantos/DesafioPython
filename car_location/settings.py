@@ -57,6 +57,13 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    )
+}
+
 ROOT_URLCONF = 'car_location.urls'
 
 TEMPLATES = [
@@ -119,7 +126,7 @@ AWS_ACCESS_KEY = config('AWS_ACCESS_KEY')
 AWS_SECRET_KEY = config('AWS_SECRET_KEY')
 
 
-
+LOGIN_URL = '/login/'
 STATIC_URL = config('STATIC_URL').format(AWS_BUCKET_NAME)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 

@@ -10,6 +10,7 @@ from car_location.location.models.veiculo import Veiculo
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import logout, login, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
@@ -20,15 +21,17 @@ from utils.mail_sender import MailSender
 SUCCESS_MSG = 'Cadastro realizado com sucesso!'
 UPDATE_MSG = 'Atualização realizada com sucesso!'
 
+
+@login_required()
 def home(request):
     return render(request, 'index.html')
 
-
+@login_required()
 def categoria_list(request):
     context = {'categorias': CategoriaVeiculo.objects.all()}
     return render(request, 'categoria_veiculo/categoria_veiculos_list.html', context)
 
-
+@login_required()
 def categoria_new(request):
     context = {'label': 'Cadastrar', 'form': CategoriaVeiculoForm()}
 
@@ -47,7 +50,7 @@ def categoria_new(request):
 
     return HttpResponseRedirect(r('categoria'))
 
-
+@login_required()
 def categoria_edit(request, pk):
     cat = get_object_or_404(CategoriaVeiculo, pk=pk)
     if request.method == "POST":
@@ -63,12 +66,12 @@ def categoria_edit(request, pk):
     context = {'label': 'Editar', 'form': form}
     return render(request, 'categoria_veiculo/categoria_veiculos.html', context)
 
-
+@login_required()
 def veiculo_list(request):
     context = {'veiculos': Veiculo.objects.all()}
     return render(request, 'veiculo/veiculos_list.html', context)
 
-
+@login_required()
 def veiculo_new(request):
     context = {'label': 'Cadastrar', 'form': VeiculoForm()}
 
@@ -86,6 +89,7 @@ def veiculo_new(request):
     messages.success(request, SUCCESS_MSG)
     return HttpResponseRedirect(r('veiculo'))
 
+@login_required()
 def veiculo_edit(request, pk):
     veiculo = get_object_or_404(Veiculo, pk=pk)
     if request.method == "POST":
@@ -101,12 +105,12 @@ def veiculo_edit(request, pk):
     context = {'label': 'Editar', 'form': form}
     return render(request, 'veiculo/veiculos.html', context)
 
-
+@login_required()
 def cliente_list(request):
     context = {'clientes': Cliente.objects.all()}
     return render(request, 'cliente/clientes_list.html', context)
 
-
+@login_required()
 def cliente_edit(request, pk):
     cliente = get_object_or_404(Cliente, pk=pk)
     if request.method == "POST":
@@ -122,7 +126,7 @@ def cliente_edit(request, pk):
     context = {'label': 'Editar', 'form': form}
     return render(request, 'cliente/clientes.html', context)
 
-
+@login_required()
 def cliente_new(request):
     context = {'label': 'Cadastrar', 'form': ClienteForm()}
 
@@ -140,12 +144,12 @@ def cliente_new(request):
     messages.success(request, SUCCESS_MSG)
     return HttpResponseRedirect(r('cliente'))
 
-
+@login_required()
 def locacao_list(request):
     context = {'locacoes': Locacao.objects.all()}
     return render(request, 'locacao/locacao_list.html', context)
 
-
+@login_required()
 def locacao_new(request):
     form = LocacaoForm()
     context = {'label': 'Cadastrar', 'form': form}
@@ -166,7 +170,7 @@ def locacao_new(request):
     messages.success(request, SUCCESS_MSG)
     return HttpResponseRedirect(r('locacao'))
 
-
+@login_required()
 def locacao_edit(request, pk):
     locacao = get_object_or_404(Locacao, pk=pk)
     if request.method == "POST":
@@ -184,12 +188,12 @@ def locacao_edit(request, pk):
     context = {'label': 'Editar', 'form': form}
     return render(request, 'locacao/locacao.html', context)
 
-
+@login_required()
 def devolucao_list(request):
     context = {'devolucoes': Devolucao.objects.all()}
     return render(request, 'devolucao/devolucao_list.html', context)
 
-
+@login_required()
 def devolucao_new(request):
     form = DevolucaoForm()
     context = {'label': 'Cadastrar', 'form': form}
@@ -232,7 +236,7 @@ def devolucao_new(request):
 
     return HttpResponseRedirect(r('devolucao'))
 
-
+@login_required()
 def devolucao_edit(request, pk):
     devolucao = get_object_or_404(Devolucao, pk=pk)
     if request.method == "POST":
@@ -250,12 +254,12 @@ def devolucao_edit(request, pk):
 
     return render(request, 'devolucao/devolucao.html', context)
 
-
+@login_required()
 def reserva_list(request):
     context = {'reservas': Reserva.objects.all()}
     return render(request, 'reserva/reserva_list.html', context)
 
-
+@login_required()
 def reserva_new(request):
 
     form = ReservaForm()
@@ -290,7 +294,7 @@ def reserva_new(request):
     messages.success(request, SUCCESS_MSG)
     return HttpResponseRedirect(r('reserva'))
 
-
+@login_required()
 def reserva_edit(request, pk):
     reserva = get_object_or_404(Reserva, pk=pk)
     if request.method == "POST":
